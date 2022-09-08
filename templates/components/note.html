@@ -1,14 +1,19 @@
 <div class="card" id="{id}">
     <h3 class="card-title">{title}</h3>
     <div class="card-content">
-    <p>
-        {details}
-    </p>
+    <p>{details}</p>
     </div>
     <div class="notebtn">
         <form method="POST">
             <button name="delete" type="submit" class="card-delete" value="{id}">Deletar</button>
           </form>
-
+        <div>
+            <button class="btn-delete" type="submit" name="delete">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADhklEQVRoge2Yv6sdRRTHP2f3hQh5aiNCXoIpHkFjYSD4J4hFbOyE/AF2EqzS2gaEtObPsNJCaxvRQsSo7yUQQrgbEoMkgWe4u1+Lu7M7+/PO3N1bBO4p7p3ZOWfmc2bnzJlZ2MlOdvJKi03u4cavnxh2G3Eu0vKBLPmcmx98N2X4ZIoxgMm+2QAe4LypuD15/GiLr37f5yR5l8QOMQ7I81tgYFb25ro0QD1llUWBBGn6JeIhhY5ZvrzD15dfzOfAjeM32cs/An0IuoJ4D+ydmAEiRcB9TH+C/QL2M8v0B24e/jtksDfaXbr8CXFpVZkeLgFiwAVkF4CPQZAu/wDeHzIYjwHj3rx8G8ndscagab3y49Mj4HCdnlSV6qVeVps68tUaOqofHv129a2L68YM3YWysUbJA5NWdQclX0cVdVtHaNVe6Wt0TCfjMTDmgD97AzMuR95n051xmuo2nwOGZep97fJZZgJ3+jO+AaFsE/A2VCC4ez6rA4suaIttErg6k4FYhLCFLaHcMpm64K0H3dlsFILAq73AZoyBIi0y8nrHHdwKZwB3NVHM50CudJFShO3hg1CB4HVfcy6hk0ycGgfvxMRm4K7x9Gs8CmILUQK4/P2T54Izo+Bq2khtr3xwdW3q7p7f+fTt10O4gu8DQovhrOmBaAUuecSlquqfHhtvN1PY8olywLRKZmvBK9oaKgLc6QcFMIQfJSi8s0n8juLXacWROjZac/byJdgBwWJSYJZtY+De4+AlFOwAssy989gdpZknxsBdh2FJDGIcKIpMbs+KBfePGQ2bNnjVvgUHsKx/9taDd2KAAfCybLYNByzPpGQaeKXTD+7+VGzBAYNFBRYJ3r5qNpqret2WbiOI7ZQynXiJewq4r9OTzU//F3aMgMhvJZe+ffQMsR8L3p7tIfBSnh1/dvaNUKaIIAZEJtgP2woHwFvJoWc5Bq9/iPw2Kinz0n3NKgcmlypq58py+3w0fAwJuws72eQNeA45SnpnXLXSiE4zqovINxDlgMQCiwfv3pF7rqfljwVeZJzEOQBVMpsNvBESio6BOAeMzIp48PYy6ep45yvbYgyYi4Ge5NOF6oK3Z7/3c0qRbM+BImdhth3wKgas2F4MJMv872LPciDdBDzgjpy/TJKjKKYY5b+uHTxGXJd4OnqVxM8TCr0j/1PAFw+vHTyOYdrJTnbyisv/NadhxosNDcEAAAAASUVORK5CYII=" width="16px" />
+            </button>
+            <button name="update" type="submit" onclick="updateNote(this)" class="btn-delete">
+                <img src="data:image/png;base64,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" width="18px"/>
+            </button>
+        </div>
     </div>
 </div>

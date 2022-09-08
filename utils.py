@@ -1,4 +1,6 @@
-import json
+from database import Database
+
+db = 'data/database'
 
 def extract_route(request):
     return request.split()[1][1:]
@@ -7,26 +9,40 @@ def read_file(filepath):
     with open(filepath, 'rb') as file:
         return file.read()
 
-def load_data(filename):
-    filepath = f'aula1-get_it/data/{filename}'
-    with open (filepath, 'r') as file:
-        return json.loads(file.read())
+def load_data(db=db):
+    db = Database(db)
+    return db.get_all()
 
 def load_template(filename):
-    filepath = f'aula1-get_it/templates/{filename}'
+    filepath = f'templates/{filename}'
     with open (filepath, 'r') as file:
         return file.read()
 
-def write_json(filename, content):
-    data = load_data(filename)
-    data.append(content)
-    with open (f'aula1-get_it/data/{filename}', 'w') as file:
-        print(data)
-        json.dump(data, file)
-
 def build_response(body='', code=200, reason='OK', headers=''):
-    #'HTTP/1.1 200 OK\n\n'.encode() + response
     if headers:
-        headers=f"\n{headers}"
-    response = f"HTTP/1.1 {code} {reason}{headers}\n\n{body}".encode()
-    return response
+        headers=f'\n{headers}'
+    return f'HTTP/1.1 {code} {reason}{headers}\n\n{body}'.encode()
+
+def add_note(note, db=db):
+    db = Database(db) # Cria um objeto do tipo Database
+    db.add(note) # Adiciona a nota no banco de dados
+    print("entrou no add note")
+
+def delete_note(note, db=db):
+    db = Database(db) # Cria um objeto do tipo Database
+    notes_db = db.get_all() # Pega todas as notas do banco de dados
+    for note_db in notes_db: # Para cada nota no banco de dados
+        title_is_equal = note_db.title == note.title # Verifica se o titulo da nota da db é igual ao titulo da nota a ser deletada
+        content_is_equal = note_db.content == note.content # Verifica se o conteudo da nota da db é igual ao conteudo da nota a ser deletada
+        if (title_is_equal and content_is_equal):
+            db.delete(note_db.id); break # Deleta a nota selecionada e termina o loop
+
+def update_note(note_to_override, new_note, db=db):
+    db = Database(db) # Cria um objeto do tipo Database
+    notes_db = db.get_all() # Pega todas as notas do banco de dados
+    for note_db in notes_db:
+        title_is_equal = note_db.title == note_to_override.title # Verifica se o titulo da nota a atualizar é igual ao titulo da nota a ser deletada
+        content_is_equal = note_db.content == note_to_override.content # Verifica se o conteudo da nota a atualizar é igual ao conteudo da nota a ser deletada
+        if (title_is_equal and content_is_equal):
+            new_note.id = note_db.id; break # Armazena o id da nota a ser atualizada e termina o loop
+    db.update(new_note) # Atualiza a nota no banco de dados
