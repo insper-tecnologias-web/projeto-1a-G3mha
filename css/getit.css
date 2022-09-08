@@ -235,12 +235,3 @@ Algumas informações úteis e dicas:
  .card-rotation-11{
    transform: rotate(5deg);
  }
-
-.btn-delete {
-  border: none;
-  background: none;
-}
-
-.btn-delete:hover {
-  cursor: pointer;
-}
