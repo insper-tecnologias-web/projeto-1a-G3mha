@@ -26,7 +26,7 @@ def build_response(body='', code=200, reason='OK', headers=''):
 def add_note(note, db=db):
     db = Database(db) # Cria um objeto do tipo Database
     db.add(note) # Adiciona a nota no banco de dados
-    print("entrou no add note")
+    print("========================================================================================")
 
 def delete_note(note, db=db):
     db = Database(db) # Cria um objeto do tipo Database

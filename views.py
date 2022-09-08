@@ -20,6 +20,7 @@ def index(request):
             chave, valor = chave_valor.split('=')
             valor = urlparse.unquote_plus(valor, encoding='utf-8')
             params[chave] = valor
+            print(chave)
         note = Note(title=params['titulo'], content=params['detalhes']) # Cria uma nova nota para o dicionario de parametros
 
         if ('create' in params.keys()): # Se o parametro create estiver no dicionario de parametros

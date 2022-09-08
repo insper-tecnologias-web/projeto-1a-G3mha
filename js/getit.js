@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function updateNote(button){
+function refreshNote(button){
   let doc = button.parentElement.parentElement;
   // pega os values originais
   let previous_title = doc.children[1];
