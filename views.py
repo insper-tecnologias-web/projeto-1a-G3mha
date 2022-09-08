@@ -22,23 +22,18 @@ def index(request):
             params[chave] = valor
             print(chave)
         note = Note(title=params['titulo'], content=params['detalhes']) # Cria uma nova nota para o dicionario de parametros
-
-        if ('create' in params.keys()): # Se o parametro create estiver no dicionario de parametros
-            add_note(note) # Adiciona a nota no banco de dados
-        
-        elif ('update' in params.keys()): # se o botao de update for clicado
-            note_anterior = Note(title=params['prev_ttl'],content=params['prev_dtl']) # Cria uma nova nota com os valores anteriores
-            update_note(note_anterior, note) # Atualiza a nota no banco de dados
-        
-        elif ('delete' in params.keys()):
-            # Deleta a nota selecionada
-            delete_note(note)
-
+        add_note(note) # Adiciona a nota no banco de dados
         return build_response(code=303, reason='See Other', headers='Location: /')
     # Cria uma lista de <li>'s para cada anotação
     # Se tiver curiosidade: https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions
     note_template, notes_li = load_template('components/note.html'), []
-    for note in load_data():
-        notes_li.append(note_template.format(title=note.title, details=note.content))
+    for dados in load_data():
+        try:
+            note = note_template.format(title=dados['titulo'], details=dados['detalhes'])
+            notes_li.append(note)
+        except:
+            print('error')
+            continue
     notes = '\n'.join(notes_li)
-    return build_response(load_template('index.html').format(notes=notes))
+    body = load_template('index.html').format(notes=notes)
+    return build_response() + body.encode()
