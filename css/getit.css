@@ -42,6 +42,10 @@ Algumas informações úteis e dicas:
    align-items: center;
  }
  
+ .note-quantity{
+  color: blue;
+ }
+
  .logo{
    width: 5%;
    height:auto;
@@ -145,7 +149,8 @@ Algumas informações úteis e dicas:
    flex-wrap: wrap;
    justify-content: space-evenly;
  }
- 
+
+
  .card{
    height: 15vh;
    width: 12vw;
