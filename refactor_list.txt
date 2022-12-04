@@ -1,0 +1,9 @@
+- Não entregou o handout funcionando. Com a entrega do handout, era esperado que fosse possível criar novas anotações.
+    Além disso, era esperado que listasse as anotações na página principal.
+- A função get_all do arquivo database.py está criando os objetos sem o 'id'.
+- Foram cometidas imprecisões na linha de código 'note = note_template.format(title=dados['titulo'], 
+    details=dados['detalhes'])' na função index do arquivo views.py. Pois 'dados' é um objeto do tipo Note, 
+    desta forma, ao invés de 'dados['titulo']' deveria ser dados.title. Além disso, faltou passar o 'id' 
+    ao utilizar o .format, o que gera uma exceção.
+- Implementou o estilo da página;
+- Existem commits depois do prazo de entrega.
