@@ -19,9 +19,10 @@ class Database:
         self.conn.commit()
     
     def get_all(self):
-        notes, cursor = [], self.conn.execute('SELECT title, content FROM note')
-        for title, content in cursor:
-            notes.append(Note(title=title, content=content))
+        notes = []
+        cursor = self.conn.execute('SELECT id, title, content FROM note')
+        for note_id, note_title, note_content in cursor:
+            notes.append(Note(id=note_id, title=note_title, content=note_content))
         return notes
 
     def update(self, entry):

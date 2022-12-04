@@ -1,4 +1,4 @@
-from utils import build_response, delete_note, load_data, load_template, add_note, delete_note, update_note
+from utils import build_response, load_data, load_template, add_note, delete_note, update_note
 import urllib.parse as urlparse
 from database import Note
 
@@ -8,15 +8,16 @@ def index(request, route = ''):
     if route != 'notas':
         if request.startswith('POST'):
             request = request.replace('\r', '')  # Remove caracteres indesejados
-            partes = request.split('\n\n')
-            corpo = partes[1]
+            body = ((request.split('\n\n'))[1]).split('&')  # Separa o body da requisição
             params = {}
-            for chave_valor in corpo.split('&'):
+            for chave_valor in body:
                 chave, valor = chave_valor.split('=')
                 valor = urlparse.unquote_plus(valor, encoding='utf-8')
                 params[chave] = valor
-            note = Note(title=params['titulo'], content=params['detalhes']); add_note(note)
+            note = Note(title=params['titulo'], content=params['detalhes'])
+            add_note(note)
             return build_response(code=303, reason='See Other', headers='Location: /')
+    
     note_template = load_template('components/note.html')
     notes_lista = []
     for dados in load_data():
